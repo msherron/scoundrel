@@ -1,0 +1,44 @@
+#!/bin/sh
+
+# Set colors, because I'm fancy.
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Create lando local overrides.
+set_local_config () {
+
+printf "${GREEN}### Hey gorgeous, tell me your project name: "
+read PROJECT_NAME
+printf "### $PROJECT_NAME, got it.${NC}\n"
+printf "***   Setting local lando configuration..\n"
+echo "DRUSH_URI=http://$PROJECT_NAME.lndo.site" >> .lando/local.env
+cat <<- EOF >> .lando.local.yml
+name: $PROJECT_NAME
+services:
+  appserver:
+    overrides:
+      environment:
+        SIMPLETEST_BASE_URL: "http://$PROJECT_NAME.lndo.site"
+tooling:
+  drush:
+    service: appserver
+    cmd:
+      drush --root=/app/docroot --uri=http://$PROJECT_NAME.lndo.site
+  test:
+    service: appserver
+    cmd:
+      - php /app/docroot/core/scripts/run-tests.sh --php /usr/local/bin/php --url http://$PROJECT_NAME.lndo.site --color --verbose
+EOF
+
+}
+
+# If I don't know you, let's get acquainted.
+if [ ! -f ".lando.local.yml" ]; then
+  set_local_config
+fi
+
+# All done.
+printf "${GREEN}### Looks like you're all set. Continuing with Lando startup..${NC}\n"
+
+# Start Lando.
+lando start

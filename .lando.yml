@@ -1,0 +1,53 @@
+recipe: drupal9
+config:
+  webroot: docroot
+  database: mariadb
+env_file:
+  - ./.lando/local.env
+services:
+  appserver:
+    xdebug: false
+    overrides:
+      image: 'acquia/ads-local:lando-php-7.3-nodejs-10'
+      environment:
+        SIMPLETEST_DB: "sqlite://localhost/tmp/db.sqlite"
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://chrome:9515"]'
+  phpmyadmin:
+    type: phpmyadmin
+  memcached:
+    type: 'memcached:1.5.3-r1'
+  chrome:
+    type: compose
+    app_mount: false
+    services:
+      image: drupalci/webdriver-chromedriver:production
+      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
+tooling:
+  si:
+    service: appserver
+    description: Install Drupal.
+    cmd:
+      - /app/scripts/site-install.sh
+      - drush --root=/app/docroot si $PROFILE --db-url='mysql://drupal9:drupal9@database/drupal9' -y
+      - find /app/docroot/sites/default -type d -exec chmod 777 '{}' \;
+      - drush --root=/app/docroot --uri=$DRUSH_URI uli
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for apache.
+    cmd: "docker-php-ext-enable xdebug && /etc/init.d/apache2 reload"
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for apache.
+    cmd: "rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload"
+    user: root
+  phpunit:
+    service: appserver
+    user: www-data
+    cmd:
+      - ./scripts/php-unit.sh
+  core-test:
+    service: appserver
+    user: www-data
+    cmd:
+      - php /app/docroot/core/scripts/run-tests.sh --php /usr/local/bin/php --color --verbose
