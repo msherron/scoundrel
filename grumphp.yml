@@ -3,8 +3,8 @@ parameters:
   bin_dir: vendor/bin
 grumphp:
   ascii:
-    failed: grumphp-grumpy.txt
-    succeeded: grumphp-happy.txt
+    failed: nopecat.txt
+    succeeded: me-gusta.txt
   process_timeout: 10
   tasks:
     git_commit_message:
@@ -19,13 +19,6 @@ grumphp:
     composer: ~
     composer_normalize: ~
     jsonlint: ~
-    phpcpd: ~
-    securitychecker:
-      lockfile: ./composer.lock
-      format: ~
-      end_point: ~
-      timeout: ~
-      run_always: false
     phpcs:
       standard: AcquiaDrupalStrict
       ignore_patterns:
