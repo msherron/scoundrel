@@ -1,16 +1,16 @@
 # Lando Scoundrel
 
-A Lando-based Drupal 9 project template, chock full of my favorite goodies - for the _discerning_ galactic smuggler.
+A [Lando-based](https://docs.lando.dev/) Drupal 9 project template, chock full of my favorite goodies - for the _discerning_ galactic smuggler.
 
 ### What's all this for, then?
 
-I find myself adding a lot of local tooling stuff to most Drupal projects that either Lando or Core doesn't provide by default. I got sick of copying and tweaking the same lando file every time I created a project, so I decided to build Scoundrel and step up my life.
+I found myself adding a lot of local tooling stuff to most Drupal projects that either Lando or Core doesn't provide by default. I got sick of copying and tweaking the same lando file every time I created a project, so I decided to build Scoundrel as a Composer project and _step up my life_.
 
-This project can be used as a local development environment for D9 builds, or to spin up a quick environment for Contrib or Core development.
+This project can be used as a local development environment for D9 builds, or to spin up a quick environment for Contrib or Core development. Inspired and partially extended from [Lando + Drupal Contributions](https://github.com/thinktandem/drupal-contributions).
 
 ### Prerequisites
 
-1. [Install Composer](https://getcomposer.org/download/). "But I don't wanna install any php stuff locally, I want Lando to handle handle all that?!" No, you don't. It's hella slow running inside Docker. Trust me on this one.
+1. [Install Composer](https://getcomposer.org/download/). "But I don't wanna install any php stuff locally, I want Lando to handle handle all that?!" No, you don't. It's hella slow running file I/O inside Docker. Trust me on this one.
 1. [Install Lando](https://docs.lando.dev/basics/installation.html).
 
 ### Getting started
@@ -23,9 +23,9 @@ This project can be used as a local development environment for D9 builds, or to
 ### Instructions on the goodies:
 
 1. Drush - we handle the path to your Drupal for you, just run `lando drush [cmd]`. No URI required.
-1. Xdebug - it's really easy to _use_ up in Lando, but you don't want to leave it on all the time, as it really tanks performance. I provide two handy commands: `xdebug-on` and `xdebug-off`.
-1. Core tests - If you want to run a full Drupal regression test (`core/scripts/run-tests.sh`), same as the D.O. testbot would run, just do `lando core-tests`.
-1. PHPUnit - just run *your* PHPUnit tests. Takes a path to a module/profile as an argument to run a targeted test.
+1. Xdebug - it's really easy to _use_ [XDebug w/ Lando](https://docs.lando.dev/guides/lando-with-vscode.html#getting-started), but you don't want to leave it on all the time, as it really tanks performance. I provide two handy commands: `xdebug-on` and `xdebug-off`.
+1. Run-tests - Core's command line test execution script ([run-tests.sh](https://www.drupal.org/docs/testing/phpunit-in-drupal/running-tests-through-command-line-with-run-testssh)), handles Simpletest, PHPUnit, etc.
+1. PHPUnit - Takes a path to a module/profile as an argument to run a targeted test.
 
 ### "Who is sniffing my _WHAT_ now?"
 

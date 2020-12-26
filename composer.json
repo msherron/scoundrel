@@ -1,6 +1,12 @@
 {
   "name": "msherron/scoundrel",
+  "type": "library",
   "description": "A Lando-powered Drupal 9 project, for the discerning galactic smuggler.",
+  "keywords": [
+    "drupal",
+    "lando",
+    "development"
+  ],
   "license": "GPL-2.0-or-later",
   "authors": [
     {
