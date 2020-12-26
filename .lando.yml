@@ -46,7 +46,7 @@ tooling:
     user: www-data
     cmd:
       - ./scripts/php-unit.sh
-  core-test:
+  run-tests:
     service: appserver
     user: www-data
     cmd:
