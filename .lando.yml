@@ -44,7 +44,7 @@ tooling:
     service: appserver
     user: www-data
     cmd:
-      - ./scripts/php-unit.sh
+      - php /app/vendor/bin/phpunit -c /app/phpunit.xml
   run-tests:
     service: appserver
     user: www-data
