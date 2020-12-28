@@ -28,7 +28,6 @@ tooling:
     description: Install Drupal.
     cmd:
       - /app/scripts/site-install.sh
-      - drush --root=/app/docroot si $PROFILE --db-url='mysql://drupal9:drupal9@database/drupal9' -y
       - find /app/docroot/sites/default -type d -exec chmod 777 '{}' \;
       - drush --root=/app/docroot --uri=$DRUSH_URI uli
   xdebug-on:

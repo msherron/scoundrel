@@ -12,5 +12,4 @@ if [ ! $1 ]; then
   exit;
 fi
 
-PROFILE=$1
-
+drush --root=/app/docroot si $PROFILE --db-url='mysql://drupal9:drupal9@database/drupal9' -y
